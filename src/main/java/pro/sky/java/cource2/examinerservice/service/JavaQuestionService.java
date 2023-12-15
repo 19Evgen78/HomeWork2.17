@@ -6,7 +6,7 @@ import pro.sky.java.cource2.examinerservice.model.Question;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
+@Service
 public class JavaQuestionService implements QuestionService {
     private List<Question> javaQuestions;
 public JavaQuestionService() {
