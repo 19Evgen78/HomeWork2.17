@@ -1,6 +1,6 @@
 package pro.sky.java.cource2.examinerservice.service;
 
-import org.springframework.context.annotation.Bean;
+import ch.qos.logback.core.joran.spi.ElementPath;
 import org.springframework.stereotype.Service;
 import pro.sky.java.cource2.examinerservice.model.Question;
 
@@ -21,17 +21,35 @@ public class ExaminerServiceImpl implements ExaminerService {
         List<Question> questions = new ArrayList<>();
         Set<Question> uniqueQuestions = new HashSet<>();
 
-        while (uniqueQuestions.size() < amount) {
-            Question randomQuestion = questionService.getRandomQuestion();
-            uniqueQuestions.add(randomQuestion);
-        }
-
-        if (uniqueQuestions.size() < amount) {
+        ElementPath allQuestions = null;
+        if (amount > allQuestions.size()) {
             throw new IllegalArgumentException("Not enough questions");
         }
 
-        questions.addAll(uniqueQuestions);
+        while (uniqueQuestions.size() < amount && uniqueQuestions.size() < allQuestions.size()) {
+            List<Question> randomQuestion = getQuestions(allQuestions.size());
 
+            if (!uniqueQuestions.contains(randomQuestion)) {
+                uniqueQuestions.add((Question) randomQuestion);
+            }
+            //ElementPath availableQuestions = null;
+            //if (uniqueQuestions.size() < amount || uniqueQuestions.size() > availableQuestions.size()) {
+            //throw new IllegalArgumentException("Not enough questions");
+            //}
+
+            //while (uniqueQuestions.size() < amount || uniqueQuestions.size() > availableQuestions.size()) {
+            //Question randomQuestion = questionService.getRandomQuestion();
+            //uniqueQuestions.add(randomQuestion);
+            //}
+
+            //if (uniqueQuestions.size() < amount) {
+            // throw new IllegalArgumentException("Not enough questions");
+            //}
+
+            questions.addAll(uniqueQuestions);
+
+            return questions;
+        }
         return questions;
     }
 }

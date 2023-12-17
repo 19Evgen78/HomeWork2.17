@@ -8,10 +8,12 @@ import java.util.List;
 import java.util.Random;
 @Service
 public class JavaQuestionService implements QuestionService {
-    private List<Question> javaQuestions;
-public JavaQuestionService() {
-        javaQuestions = new ArrayList<>();
-    }
+    private List<Question> javaQuestions = new ArrayList<>();
+    //private List<Question> javaQuestions;
+    private Random random;
+//public JavaQuestionService() {
+        //javaQuestions = new ArrayList<>();
+    //}
 
     @Override
     public void addQuestion(Question question) {
@@ -30,7 +32,7 @@ public JavaQuestionService() {
 
     @Override
     public Question getRandomQuestion() {
-        Random random = new Random();
+        //Random random = new Random();
         int randomIndex = random.nextInt(javaQuestions.size());
         return javaQuestions.get(randomIndex);
     }
