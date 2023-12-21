@@ -19,21 +19,28 @@ public class ExaminerServiceImpl implements ExaminerService {
     @Override
     public List<Question> getQuestions(int amount) {
         List<Question> questions = new ArrayList<>();
-        Set<Question> uniqueQuestions = new HashSet<>();
+        Set<List<Question>> uniqueQuestions = new HashSet<>();
 
-        List<Question> allQuestions = questionService.getAllQuestions();
+        List allQuestions = questionService.getAllQuestions();
         if (amount > allQuestions.size()) {
             throw new IllegalArgumentException("Not enough questions");
+
         }
 
-        if (0 < amount) {
-            List<Question> randomQuestion = getQuestions(allQuestions.size());
+        while (uniqueQuestions.size() < amount && uniqueQuestions.size() < allQuestions.size()) {
+            List<Question> randomQuestion;
+            randomQuestion = getQuestions(allQuestions);
 
-            uniqueQuestions.add((Question) randomQuestion);
-            questions.addAll(uniqueQuestions);
+            if (!uniqueQuestions.contains(randomQuestion)) {
+                uniqueQuestions.add(randomQuestion);
+            }
 
             return questions;
         }
         return questions;
+    }
+
+    private List<Question> getQuestions(List allQuestions) {
+        return null;
     }
 }
