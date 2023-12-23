@@ -10,4 +10,6 @@ public interface QuestionService {
     void removeQuestion(Question question);
     List<Question> getAllQuestions();
     Question getRandomQuestion();
+
+    Object getAll();
 }

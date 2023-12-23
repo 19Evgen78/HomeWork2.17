@@ -1,46 +1,35 @@
 package pro.sky.java.cource2.examinerservice.service;
 
+import ch.qos.logback.core.joran.spi.ElementPath;
 import org.springframework.stereotype.Service;
+import pro.sky.java.cource2.examinerservice.exception.NotEnoughQuestionsException;
 import pro.sky.java.cource2.examinerservice.model.Question;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
     private final QuestionService questionService;
+    private QuestionService javaService;
+    private ElementPath allJavaQuestions;
+    private ElementPath allMathQuestions;
 
     public ExaminerServiceImpl(QuestionService questionService) {
         this.questionService = questionService;
     }
 
     @Override
-    public List<Question> getQuestions(int amount) {
-        List<Question> questions = new ArrayList<>();
-        Set<List<Question>> uniqueQuestions = new HashSet<>();
-
-        List allQuestions = questionService.getAllQuestions();
-        if (amount > allQuestions.size()) {
-            throw new IllegalArgumentException("Not enough questions");
-
+    public Set<Question> getQuestions(int amount) {
+        var allQuestions = questionService.getAll();
+        if (amount > allJavaQuestions.size() + allMathQuestions.size()) {
+            throw new NotEnoughQuestionsException();
         }
+        Set<Question> result = new HashSet<>();
+        while (result.size() < amount) {
 
-        while (uniqueQuestions.size() < amount && uniqueQuestions.size() < allQuestions.size()) {
-            List<Question> randomQuestion;
-            randomQuestion = getQuestions(allQuestions);
-
-            if (!uniqueQuestions.contains(randomQuestion)) {
-                uniqueQuestions.add(randomQuestion);
-            }
-
-            return questions;
+            result.add(javaService.getRandomQuestion());
         }
-        return questions;
-    }
-
-    private List<Question> getQuestions(List allQuestions) {
-        return null;
+        return result;
     }
 }

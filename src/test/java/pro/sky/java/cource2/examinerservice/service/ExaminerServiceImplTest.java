@@ -28,7 +28,7 @@ class ExaminerServiceImplTest {
     }
 
     @Test
-    public void testGetQuestions() {
+    public void testGetQuestions() throws InterruptedException {
         Question question1 = new Question("Question 1", "Answer 1");
         Question question2 = new Question("Question 2", "Answer 2");
         Question question3 = new Question("Question 3", "Answer 3");
@@ -39,7 +39,7 @@ class ExaminerServiceImplTest {
                 .thenReturn(question3);
 
         int amount = 3;
-        List<Question> result = examinerService.getQuestions(amount);
+        List<Question> result = (List<Question>) examinerService.getQuestions(amount);
 
         assertNotNull(result);
         assertEquals(amount, result.size());

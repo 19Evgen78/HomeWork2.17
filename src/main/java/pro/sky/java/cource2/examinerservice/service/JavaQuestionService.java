@@ -36,4 +36,9 @@ public class JavaQuestionService implements QuestionService {
         int randomIndex = random.nextInt(javaQuestions.size());
         return javaQuestions.get(randomIndex);
     }
+
+    @Override
+    public Object getAll() {
+        return null;
+    }
 }

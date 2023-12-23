@@ -3,9 +3,9 @@ package pro.sky.java.cource2.examinerservice.service;
 import org.springframework.stereotype.Service;
 import pro.sky.java.cource2.examinerservice.model.Question;
 
-import java.util.List;
+import java.util.Set;
 
 @Service
 public interface ExaminerService {
-    List<Question> getQuestions(int amount);
+    Set<Question> getQuestions(int amount) throws InterruptedException;
 }
